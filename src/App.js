@@ -1,5 +1,5 @@
 import "./App.css";
-import Lamp from "./components/Lamp";
+import List2 from "./components/List2";
 
 function App() {
   const name = "Trong";
@@ -7,7 +7,7 @@ function App() {
   return (
     <>
     {/* KHI MUỐN SỬ DỤNG THÌ XUẤT RA */}
-    <Lamp />
+    <List2 />
     </>
   );
 }
