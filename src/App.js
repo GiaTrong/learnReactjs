@@ -1,13 +1,10 @@
 import "./App.css";
-import List2 from "./components/List2";
+import Data from "./components/Data";
 
 function App() {
-  const name = "Trong";
-
   return (
     <>
-    {/* KHI MUỐN SỬ DỤNG THÌ XUẤT RA */}
-    <List2 />
+      <Data />
     </>
   );
 }
