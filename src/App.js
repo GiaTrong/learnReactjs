@@ -1,10 +1,10 @@
 import "./App.css";
-import Data from "./components/Data";
+import UseRef3 from "./components/UseRef2";
 
 function App() {
   return (
     <>
-      <Data />
+      <UseRef3 />
     </>
   );
 }
