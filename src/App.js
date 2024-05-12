@@ -1,22 +1,107 @@
-import './App.css';
-import {useState} from 'react'
-import Hello from './Hello';
+import "./App.css";
+import { useReducer, useRef } from "react";
+// 1. Init state
+const initState = {
+  job: "",
+  jobs: [],
+};
+
+// 2. Actions
+const SET_JOB = "set_job";
+const ADD_JOB = "add_job";
+const DELETE_JOB = "delete_job";
+
+const setJob = (payload) => {
+  return {
+    type: SET_JOB,
+    payload,
+  };
+};
+
+const addJob = (payload) => {
+  return {
+    type: ADD_JOB,
+    payload,
+  };
+};
+
+const deleteJob = (payload) => {
+  return {
+    type: DELETE_JOB,
+    payload,
+  };
+};
+
+// 3. Reducer
+const reducer = (state, action) => {
+  console.log(state);
+  console.log(action);
+
+  switch (action.type) {
+    case SET_JOB:
+      return {
+        ...state,
+        job: action.payload,
+      };
+    case ADD_JOB:
+      return {
+        ...state,
+        jobs: [...state.jobs, action.payload],
+      };
+    case DELETE_JOB:
+      let newState = [...state.jobs];
+
+      newState.splice(action.payload, 1);
+
+      return {
+        ...state,
+        jobs: [...newState],
+      };
+
+    default:
+      throw new Error("Invalid action");
+  }
+};
+
+// 4. Dispatch
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [state, dispatch] = useReducer(reducer, initState);
+  const inputRef = useRef();
 
-  const increase = () => {
-    setCount(count + 1);
-  }
-  return ( 
+  const { job, jobs } = state;
+
+  const handleSubmit = () => {
+    dispatch(addJob(job));
+
+    state.job = "";
+
+    inputRef.current.focus();
+  };
+
+  return (
     <>
-    {/* nó sẽ không bị thay đổi khi props của nó ko thay đổi  */}
-    <Hello count={count}/>
-    {/* count ở đây là props truyền vào, nó sẽ re-render chỉ cần 1 TRONG NHIỀU props thay đổi */}
+      <div style={{ padding: "0 20px" }}>
+        <h3>To Do</h3>
+        <input
+          ref={inputRef}
+          value={job}
+          placeholder="Enter to do ..."
+          onChange={(e) => {
+            dispatch(setJob(e.target.value));
+          }}
+        />
 
-    <h1>{count}</h1>
+        <button onClick={handleSubmit}>Add</button>
 
-    <button onClick={increase}>Click me</button>
+        <ul>
+          {jobs.map((item, index) => (
+            <li key={index}>
+              {item} <span onClick={() => dispatch(deleteJob(index))}>x</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 }

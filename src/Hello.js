@@ -1,9 +1,15 @@
 import { memo } from "react";
 
-function Hello({count}) {
+function Hello(props) {
   console.log("re-render");
 
-  return <h1>Hello moi nguoi {count}</h1>;
+  return (
+    <>
+      <h1>Hello moi nguoi </h1>
+
+      <button onClick={props.onIncrease}>Click me</button>
+    </>
+  );
 }
 
 // truyền memo vào đây để biến cái component thành component cấp cao
